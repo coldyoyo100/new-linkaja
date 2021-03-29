@@ -1,0 +1,10 @@
+[
+	{
+		"customerNumber" : "1001",
+		"name" : "Bob Martin"	
+	},
+	{
+		"customerNumber" : "1002",
+		"name" : "Linus Torvalds"	
+	}
+]

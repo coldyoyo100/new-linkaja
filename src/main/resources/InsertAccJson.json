@@ -1,0 +1,12 @@
+[
+	{
+		"accountNumber": "55501",
+		"customerNumber": "1001",
+		"balance": 10000
+	},
+	{
+		"accountNumber": "55502",
+		"customerNumber": "1002",
+		"balance": 15000
+	}
+]
