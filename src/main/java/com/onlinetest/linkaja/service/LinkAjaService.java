@@ -66,9 +66,9 @@ public class LinkAjaService {
 	
 	public String updateAmount(String fromAcc, int amount, String destAcc) throws Exception{
 		String retval = null;
-		List<AccountModel> accInfo = accRepo.getInfoByAccNo(fromAcc);
+		AccountModel accModel = accRepo.getInfoByAccNo(fromAcc);
 		
-		for(AccountModel accModel : accInfo) {
+//		for(AccountModel accModel : accInfo) {
 			int balance = accModel.getBalance();
 			int newBalance = balance - amount;
 			if(newBalance < 0) {
@@ -79,28 +79,29 @@ public class LinkAjaService {
 				
 				updtDestAcc(destAcc, balance);
 			}
-		}
+//		}
 		
 		return retval;
 	}
 	
 	
 	public void updtDestAcc(String destAcc, int transferBalance) throws Exception {
-		List<AccountModel> accList = accRepo.getInfoByAccNo(destAcc);
+		AccountModel accModel = accRepo.getInfoByAccNo(destAcc);
 		
-		for(AccountModel accModel : accList) {
+//		for(AccountModel accModel : accList) {
 			int addBalance = accModel.getBalance() + transferBalance;
 			accModel.setBalance(addBalance);
 			accRepo.save(accModel);
-		}
+//		}
 	}
 	
 	public String getAccInfo(String accNo) {
-		List<AccountModel> accList = accRepo.getInfoByAccNo(accNo);
-		
-		AccountInfoDto infoDto = new AccountInfoDto();
-		
-		for(AccountModel accModel : accList) {
+		String retval = null;
+		if(!accNo.isEmpty() || !accNo.isEmpty() || accNo != null) {
+			AccountModel accModel = accRepo.getInfoByAccNo(accNo);
+			
+			AccountInfoDto infoDto = new AccountInfoDto();
+			
 			infoDto.setAccountNumber(String.valueOf(accModel.getAccountNumber()));
 			infoDto.setBalance(accModel.getBalance());
 			
@@ -108,9 +109,11 @@ public class LinkAjaService {
 			String custName = custRepo.getNameByCustNo(custNo);
 			
 			infoDto.setCustomerName(custName);
+			
+			retval = infoDto.toString();
 		}
 		
-		return infoDto.toString();
+		return retval;
 	}
 	
 	public String transferAccSeq(String fromAcc, TransferDto transferDto) throws Exception {

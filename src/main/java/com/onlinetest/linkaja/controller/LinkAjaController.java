@@ -63,7 +63,7 @@ public class LinkAjaController {
 		String accInfo = null;
 		try {
 			accInfo = linkService.getAccInfo(accNo);
-			if(accInfo.isEmpty()) ResponseEntity.ok(String.valueOf(HttpStatus.NO_CONTENT) + " - Info Acc Tidak Ditemukan");
+			if(accInfo.isEmpty() || accInfo == null) ResponseEntity.ok(String.valueOf(HttpStatus.NOT_FOUND) + " - Info Acc Tidak Ditemukan");
 		}catch(Exception e) {
 			return ResponseEntity.ok(e.getMessage());
 		}
@@ -72,8 +72,13 @@ public class LinkAjaController {
 	}
 	
 	@PostMapping("/{accNo}/transfer")
-	public String transferAction(@PathVariable("accNo") String accNo, @RequestBody TransferDto transderdto) throws Exception {
-		
-		return null;
+	public ResponseEntity<?> transferAction(@PathVariable("accNo") String accNo, @RequestBody TransferDto transderdto) throws Exception {
+		String retval = null;
+		try{
+			retval = linkService.transferAccSeq(accNo, transderdto);
+		}catch(Exception e) {
+			return ResponseEntity.ok(e.getMessage());
+		}
+		return ResponseEntity.ok("Transfer Sukses: " + retval);
 	}
 }

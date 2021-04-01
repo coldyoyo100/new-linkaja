@@ -1,1 +1,0 @@
-package com.onlinetest.linkaja.repository;
